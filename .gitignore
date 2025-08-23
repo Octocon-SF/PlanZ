@@ -11,7 +11,6 @@ webpages/dist/
 webpages/obs/
 
 # Exclude non-sample config files.
-webpages/config/db_name.php
 webpages/config/db_env.php
 webpages/config/db.php
 webpages/config/db_name_backup_*.php
