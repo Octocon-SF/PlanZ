@@ -61,6 +61,24 @@
         echo('<p>The program data file was created.' . "\n");
         echo('<p>Number of program items: ' . $results["program_num_rows"] . "\n");
 
+        $resultsFile = fopen(JSON_EXTRACT_DIRECTORY . "program_object.js","w");
+        if ($resultsFile === FALSE) {
+            $message_error = "StaffCreateKonOpas.php: Cannot open ../program_object.js for writing.";
+            error_log($message_error);
+            RenderError($message_error);
+            exit(1);
+        }
+        if (fwrite($resultsFile, '{"program": ' . $results["program"] . '}') === FALSE) {
+            $message_error = "StaffCreateKonOpas.php: Error writing to ../program_object.js.";
+            error_log($message_error);
+            RenderError($message_error);
+            fclose($resultsFile);
+            exit(1);
+        }
+        fclose($resultsFile);
+        echo('<p>The program object data file was created.' . "\n");
+        echo('<p>Number of program items: ' . $results["program_num_rows"] . "\n");
+
         $resultsFile = fopen(JSON_EXTRACT_DIRECTORY . "people.js","w");
         if ($resultsFile === FALSE) {
             $message_error = "StaffCreateKonOpas.php: Cannot open ../people.js for writing.";
