@@ -236,8 +236,7 @@ echo "<table id=\"add-to-room-schedule-table\" class=\"table table-sm\">\n";
         <col width="15%">
         <col width="10%">
         <col width="10%">
-        <col width="10%">
-        <col width="55%">
+        <col width="65%">
     </colgroup>
 
 <?php

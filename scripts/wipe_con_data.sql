@@ -18,8 +18,12 @@ truncate table SessionHasFeature;
 truncate table SessionHasService;
 truncate table SessionEditHistory;
 truncate table SessionHasTag;
-truncate table Sessions;
-truncate table Participants;
+truncate table participant_on_session_history;
+truncate table CongoDumpHistory;
+delete from Sessions;
+truncate table ParticipantHasInterest;
+truncate table ParticipantDetails;
+delete from Participants;
 truncate table PreviousParticipants;
 
 -- you don't want to disable constraints. Really! 
