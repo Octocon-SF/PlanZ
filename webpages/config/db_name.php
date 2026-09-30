@@ -111,7 +111,7 @@ define("HTML_SESSION", true); // Allow editing Session Description as HTML and s
 define("MEETING_LINK", true); // Add support for Meeting link in sessions
 define("STREAMING_LINK", true); // Add support for streaming link in sessions
 define("STREAMING_LABEL", "Streaming link"); // Specify label for streaming link - allows conventions to specify specific streaming service if required
-define("SIGNUP_LINK", true); // Add support for signup link in sessions
+define("SIGNUP_LINK", false); // Add support for signup link in sessions
 
 // Items for Photo Upload/Approval
 define("PARTICIPANT_PHOTOS", true); // enable the participant photo feature
