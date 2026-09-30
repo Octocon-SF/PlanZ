@@ -123,7 +123,15 @@ define("PHOTO_DIMENSIONS", "200,200,800,800,1048576"); // comma separated list: 
 define("PHOTO_DEFAULT_IMAGE", "default.png"); // placeholder image for participants without photo
 
 define("JSON_EXTRACT_DIRECTORY", "/var/data/guide/");  // Path to directory where Konopas/ConClár files to be written.
-define("JSON_EXTRACT_ASSIGN_VARS", FALSE); // If TRUE include variable names in JSON output files (required for KonOpas).
+define("JSON_EXTRACT_FORMAT", "konopas"); // Format of the KonOpas/ConClár data files:
+        // "konopas" = KonOpas compatible bare arrays. Use with ConClár PROGRAM_DATA_URL/PEOPLE_DATA_URL.
+        // "v2" = ConClár schemaVersion 2 objects. Use with ConClár DATA_URLS (COMBINED, or SCHEDULE and PEOPLE).
+define("JSON_EXTRACT_FILES", "both"); // Which data files to write:
+        // "separate" = program and people in separate files (konopas: program.js, people.js, konopas.appcache; v2: schedule.json, people.json).
+        // "combined" = program and people in a single file (konopas: konOpasData.json; v2: conclarData.json).
+        // "both" = write both the separate and combined files.
+define("JSON_EXTRACT_WRITE_TEST_COPY", TRUE); // If TRUE also write "Test" copies of the ConClár data and info files.
+define("JSON_EXTRACT_ASSIGN_VARS", FALSE); // If TRUE include variable names in JSON output files (required for KonOpas). Only applies to "konopas" format.
 define("OBS_EXTRACT_DIRECTORY", "obs"); // Path to directory for OBS files, relative to web root.
 define('OBS_EXTRACT_TAGS', ''); // Comma separated list of Tags to generate OBS extracts for.
         // Prefix Tag with ~ in list to extract all items without tag.
