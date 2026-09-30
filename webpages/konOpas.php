@@ -63,6 +63,9 @@
         exit();
     }
     else if ($results["json"]) {
+        if ($results["format"] === KONOPAS_FORMAT_V2) {
+            header("Content-Type: application/json");
+        }
         echo $results["json"];
         exit();
     }
