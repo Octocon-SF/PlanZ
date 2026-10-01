@@ -47,6 +47,23 @@ function konOpasJsonEncode($value) {
     return $json;
 }
 
+// Build the links for a session from the link fields enabled by MEETING_LINK, STREAMING_LINK and SIGNUP_LINK.
+// Keys are the link names ConClár expects in its LINKS config.
+function buildSessionLinks($row) {
+    $linkFields = array(
+        "meeting" => array("MEETING_LINK", "meetinglink"),
+        "stream"  => array("STREAMING_LINK", "streaminglink"),
+        "signup"  => array("SIGNUP_LINK", "signuplink")
+        );
+    $links = array();
+    foreach ($linkFields as $linkName => list($setting, $column)) {
+        if (defined($setting) && constant($setting) === TRUE && !empty($row[$column])) {
+            $links[$linkName] = $row[$column];
+        }
+    }
+    return $links;
+}
+
 // Gather the published schedule and participant data from the database in a format neutral form.
 function retrieveKonOpasSourceData($showpubstatus, $showbio) {
     $ConStartDatim = CON_START_DATIM;
@@ -106,7 +123,9 @@ SELECT
     DATE_FORMAT(ADDTIME('$ConStartDatim',SCH.starttime),'%Y-%m-%d %H:%i:00') as datim,
     GROUP_CONCAT(TA.tagid ORDER BY TA.tagid SEPARATOR ',') AS tagidlist,
     GROUP_CONCAT(TA.tagname ORDER BY TA.tagid SEPARATOR ',') AS taglist,
-    S.meetinglink
+    S.meetinglink,
+    S.streaminglink,
+    S.signuplink
 FROM
               Schedule SCH
          JOIN Sessions S USING (sessionid)
@@ -159,7 +178,7 @@ EOD;
             "loc"          => $row["loc"] . $locfloor,
             "people"       => isset($sessionHasParticipant[$row["id"]]) ? $sessionHasParticipant[$row["id"]] : array(),
             "desc"         => $desc,
-            "meetinglink"  => $row["meetinglink"]
+            "links"        => buildSessionLinks($row)
             );
     }
 
@@ -255,11 +274,8 @@ function buildKonOpasProgram($sessions) {
             "loc"    => array($session["loc"]),
             "people" => $people,
             "desc"   => $session["desc"],
-            "links"  => []
+            "links"  => $session["links"]
             );
-        if (!empty($session["meetinglink"])) {
-            $programRow["links"] = ["meeting" => $session["meetinglink"]];
-        }
         $program[] = $programRow;
     }
     return $program;
@@ -315,11 +331,8 @@ function buildConclarV2Schedule($sessions) {
             "loc"      => array($session["loc"]),
             "people"   => $people,
             "desc"     => $session["desc"],
-            "links"    => []
+            "links"    => $session["links"]
             );
-        if (!empty($session["meetinglink"])) {
-            $scheduleRow["links"] = ["meeting" => $session["meetinglink"]];
-        }
         $schedule[] = $scheduleRow;
     }
     return $schedule;
